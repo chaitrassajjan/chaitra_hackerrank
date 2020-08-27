@@ -1,66 +1,54 @@
-#include <bits/stdc++.h>
-
-
-using namespace std; long long po(long long a,long long b,long long x) { long long ans=1; a=a%x; while(b>0) { if(b&1) ans=(ans*a)%x; b=b>>1; a=(a*a)%x; } return ans; }
-
-int main() { bool prime[1000001];
-
-memset(prime,'1',sizeof(prime)); for(int i=2;i*i<=1000001;i++) { if(prime[i]) { for(int j=(i*i);j<1000001;j+=i) prime[j]=0; } }
-
-int q; cin>>q; while(q--) { long long a,b,x;
-
- cin>>a>>b>>x;
-
- int aa=x;
- vector<int>v;
-int  i=2;
-   long long ans=1;
-   if(b<0)
-   {
-if(!prime[a])
-{  
-    while(aa>1)
-     { 
-          int ab=aa;
-                  while(aa%i==0)
-                    aa/=i;
-
-        if(aa!=ab)
-        v.push_back(i);
-
-        i++;
-
-        if(aa)
-       {
-           while(prime[i]==0)
-                {  
-                    i++;
-                }
-       }
- }
-
-  ans=x;
- for(int i=0;i<v.size();i++)
-     {
-         ans=(ans*(v[i]-1))/v[i];
-     }
-
-}
-else if(a>2)
+#include<bits/stdc++.h>
+#define ll long long int
+#define MOD 1000000007
+using namespace std;
+ll modmulinverse(ll a,ll m)
 {
-    ans=x-1;
+    ll x = 0,y = 1,u = 1,v = 0;
+    ll e = m,f = a;
+    ll c,d,q,r;
+    while(f != 1)
+    {
+        q = e/f;
+        r = e%f;
+        c = x-q*u;
+        d = y-q*v;
+        x = u;
+        y = v;
+        u = c;
+        v = d;
+        e = f;
+        f = r;
+    }
+    u = (u+m)%m;
+    return u;
+}
+ll mod(ll a,ll b,ll n){
+    ll res=1;
+
+      while (b)
+{
+    if (b % 2) { res = (res * a) % n; }
+
+    a = (a * a) % n;
+    b /= 2;
 }
 
+return res;
+}
 
-   while(b<0)
-     b+=ans;
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--){
+            ll a,b,x,ans;
+    cin>>a>>b>>x;
+    a=a%x;
+    if (b<0) a=modmulinverse(a,x);
+    ans=mod(a,b,x);
+    cout<<ans<<endl;
 
-
-cout<<po(a,b,x)<<endl;
-   }
-   else
-   {
-    cout<<po(a,b,x)<<endl;
-   }
-} 
+    }
+    return 0;
 }
